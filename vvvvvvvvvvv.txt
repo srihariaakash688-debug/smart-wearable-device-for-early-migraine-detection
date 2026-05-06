@@ -1,0 +1,51 @@
+import time
+import random
+import numpy as np
+
+# Simulated wearable data
+def get_sensor_data():
+    heart_rate = random.randint(60, 110)   # bpm
+    stress_level = random.randint(1, 10)   # 1–10 scale
+    sleep_hours = random.uniform(4, 8)     # hours
+    activity_level = random.randint(1, 10) # 1–10 scale
+    
+    return heart_rate, stress_level, sleep_hours, activity_level
+
+# Detect migraine risk
+def detect_migraine(hr, stress, sleep, activity):
+    risk_score = 0
+
+    # Conditions (simple rule-based logic)
+    if hr > 90:
+        risk_score += 2
+    if stress > 7:
+        risk_score += 3
+    if sleep < 5:
+        risk_score += 2
+    if activity < 3:
+        risk_score += 1
+
+    return risk_score
+
+# Alert system
+def alert_user():
+    print("\n⚠️ WARNING: Possible migraine detected!")
+    print("Suggestions:")
+    print("- Drink water")
+    print("- Rest in a dark room")
+    print("- Take prescribed medication\n")
+
+# Main loop
+print("Smart Migraine Detection Wearable Started...\n")
+
+while True:
+    hr, stress, sleep, activity = get_sensor_data()
+
+    print(f"HR: {hr}, Stress: {stress}, Sleep: {sleep:.1f}, Activity: {activity}")
+
+    risk = detect_migraine(hr, stress, sleep, activity)
+
+    if risk >= 5:
+        alert_user()
+
+    time.sleep(5)
